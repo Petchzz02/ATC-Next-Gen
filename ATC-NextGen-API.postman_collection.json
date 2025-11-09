@@ -1,0 +1,225 @@
+{
+  "info": {
+    "name": "ATC Next Gen API",
+    "description": "Online Shop Management System API Collection",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3001",
+      "type": "string"
+    },
+    {
+      "key": "JWT_TOKEN",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Status Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/api/status",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "status"]
+        }
+      }
+    },
+    {
+      "name": "2. Register User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\",\n    \"role\": \"admin\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/register",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "register"]
+        }
+      }
+    },
+    {
+      "name": "3. Login User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/login",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "login"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Extract token from response",
+              "if (pm.response.code === 200) {",
+              "    const response = pm.response.json();",
+              "    pm.environment.set('JWT_TOKEN', response.token);",
+              "    pm.collectionVariables.set('JWT_TOKEN', response.token);",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Create Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Mechanical Keyboard\",\n    \"price\": 1590,\n    \"stock\": 50,\n    \"description\": \"Gaming mechanical keyboard with RGB lighting\",\n    \"category\": \"Electronics\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/products",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "products"]
+        }
+      }
+    },
+    {
+      "name": "5. Get All Products",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/products",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "products"]
+        }
+      }
+    },
+    {
+      "name": "6. Get Product by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/products/1",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "products", "1"]
+        }
+      }
+    },
+    {
+      "name": "7. Update Product",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Updated Keyboard\",\n    \"price\": 1790,\n    \"stock\": 45\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/products/1",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "products", "1"]
+        }
+      }
+    },
+    {
+      "name": "8. Get Low Stock Products",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/products/low-stock",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "products", "low-stock"]
+        }
+      }
+    },
+    {
+      "name": "9. Get Total Value",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/products/total-value",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "products", "total-value"]
+        }
+      }
+    },
+    {
+      "name": "10. Delete Product",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{JWT_TOKEN}}"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/products/1",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "products", "1"]
+        }
+      }
+    }
+  ]
+}

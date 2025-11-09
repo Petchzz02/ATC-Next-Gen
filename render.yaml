@@ -1,0 +1,7 @@
+# Render Deployment Configuration
+
+# Build Command (if needed)
+npm install
+
+# Start Command
+npm start
