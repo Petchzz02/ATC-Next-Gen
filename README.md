@@ -230,4 +230,4 @@ curl https://your-deployed-api.com/api/status
 
 ---
 
-> **หน้าต่อไป**: Deploy ระบบบน Render และทดสอบ API ผ่าน Public URL
+> **Deploy**: https://atc-next-gen-production.up.railway.app/
