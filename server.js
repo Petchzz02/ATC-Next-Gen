@@ -75,8 +75,12 @@ app.use((err, req, res, next) => {
 });
 
 // เริ่มการทำงานของ Server
-app.listen(PORT, () => {
+const HOST = '0.0.0.0'; // รองรับ Render และ hosting platforms อื่นๆ
+
+app.listen(PORT, HOST, () => {
   console.log(`🚀 ATC Next Gen API Server is running on port ${PORT}`);
+  console.log(`📍 Host: ${HOST}`);
   console.log(`📍 Available at: http://localhost:${PORT}`);
   console.log(`📋 Status endpoint: http://localhost:${PORT}/api/status`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
 });

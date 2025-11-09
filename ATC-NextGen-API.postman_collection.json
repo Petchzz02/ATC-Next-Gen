@@ -1,8 +1,9 @@
 {
   "info": {
+    "_postman_id": "atc-nextgen-api-2025",
     "name": "ATC Next Gen API",
     "description": "Online Shop Management System API Collection",
-    "version": "1.0.0"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     {
@@ -26,8 +27,10 @@
           "raw": "{{BASE_URL}}/api/status",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "status"]
-        }
-      }
+        },
+        "description": "Check if API server is running and get uptime information"
+      },
+      "response": []
     },
     {
       "name": "2. Register User",
@@ -36,19 +39,27 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json"
+            "value": "application/json",
+            "type": "text"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\",\n    \"role\": \"admin\"\n}"
+          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\",\n    \"role\": \"admin\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
         },
         "url": {
           "raw": "{{BASE_URL}}/api/register",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "register"]
-        }
-      }
+        },
+        "description": "Register a new user account"
+      },
+      "response": []
     },
     {
       "name": "3. Login User",
@@ -57,29 +68,38 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json"
+            "value": "application/json",
+            "type": "text"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}"
+          "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
         },
         "url": {
           "raw": "{{BASE_URL}}/api/login",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "login"]
-        }
+        },
+        "description": "Login and receive JWT token (automatically saved to JWT_TOKEN variable)"
       },
+      "response": [],
       "event": [
         {
           "listen": "test",
           "script": {
+            "type": "text/javascript",
             "exec": [
               "// Extract token from response",
               "if (pm.response.code === 200) {",
               "    const response = pm.response.json();",
-              "    pm.environment.set('JWT_TOKEN', response.token);",
               "    pm.collectionVariables.set('JWT_TOKEN', response.token);",
+              "    console.log('Token saved:', response.token);",
               "}"
             ]
           }
@@ -93,23 +113,32 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json"
+            "value": "application/json",
+            "type": "text"
           },
           {
             "key": "Authorization",
-            "value": "Bearer {{JWT_TOKEN}}"
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"name\": \"Mechanical Keyboard\",\n    \"price\": 1590,\n    \"stock\": 50,\n    \"description\": \"Gaming mechanical keyboard with RGB lighting\",\n    \"category\": \"Electronics\"\n}"
+          "raw": "{\n    \"name\": \"Mechanical Keyboard\",\n    \"price\": 1590,\n    \"stock\": 50,\n    \"description\": \"Gaming mechanical keyboard with RGB lighting\",\n    \"category\": \"Electronics\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
         },
         "url": {
           "raw": "{{BASE_URL}}/api/products",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "products"]
-        }
-      }
+        },
+        "description": "Create a new product (requires JWT token)"
+      },
+      "response": []
     },
     {
       "name": "5. Get All Products",
@@ -118,15 +147,18 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer {{JWT_TOKEN}}"
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
           }
         ],
         "url": {
           "raw": "{{BASE_URL}}/api/products",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "products"]
-        }
-      }
+        },
+        "description": "Get all products (requires JWT token)"
+      },
+      "response": []
     },
     {
       "name": "6. Get Product by ID",
@@ -135,15 +167,18 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer {{JWT_TOKEN}}"
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
           }
         ],
         "url": {
           "raw": "{{BASE_URL}}/api/products/1",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "products", "1"]
-        }
-      }
+        },
+        "description": "Get a specific product by ID"
+      },
+      "response": []
     },
     {
       "name": "7. Update Product",
@@ -152,23 +187,32 @@
         "header": [
           {
             "key": "Content-Type",
-            "value": "application/json"
+            "value": "application/json",
+            "type": "text"
           },
           {
             "key": "Authorization",
-            "value": "Bearer {{JWT_TOKEN}}"
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"name\": \"Updated Keyboard\",\n    \"price\": 1790,\n    \"stock\": 45\n}"
+          "raw": "{\n    \"name\": \"Updated Keyboard\",\n    \"price\": 1790,\n    \"stock\": 45\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
         },
         "url": {
           "raw": "{{BASE_URL}}/api/products/1",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "products", "1"]
-        }
-      }
+        },
+        "description": "Update product information"
+      },
+      "response": []
     },
     {
       "name": "8. Get Low Stock Products",
@@ -177,15 +221,18 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer {{JWT_TOKEN}}"
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
           }
         ],
         "url": {
           "raw": "{{BASE_URL}}/api/products/low-stock",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "products", "low-stock"]
-        }
-      }
+        },
+        "description": "Get products with stock less than 10"
+      },
+      "response": []
     },
     {
       "name": "9. Get Total Value",
@@ -194,15 +241,18 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer {{JWT_TOKEN}}"
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
           }
         ],
         "url": {
           "raw": "{{BASE_URL}}/api/products/total-value",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "products", "total-value"]
-        }
-      }
+        },
+        "description": "Calculate total value of all products in inventory"
+      },
+      "response": []
     },
     {
       "name": "10. Delete Product",
@@ -211,15 +261,18 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer {{JWT_TOKEN}}"
+            "value": "Bearer {{JWT_TOKEN}}",
+            "type": "text"
           }
         ],
         "url": {
           "raw": "{{BASE_URL}}/api/products/1",
           "host": ["{{BASE_URL}}"],
           "path": ["api", "products", "1"]
-        }
-      }
+        },
+        "description": "Delete a product by ID"
+      },
+      "response": []
     }
   ]
 }
